@@ -1,73 +1,94 @@
-# React + TypeScript + Vite
+# Frontend - Sistema de Matrículas
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Aplicación web con React y TypeScript para gestionar facultades y carreras universitarias.
 
-Currently, two official plugins are available:
+## Tecnologías
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+React 19, TypeScript 5.9, Vite 7, Zustand 5, Tailwind CSS 3.4
 
-## React Compiler
+## Pre-requisitos
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- Node.js 18+
+- npm 9+
 
-## Expanding the ESLint configuration
+## Instalación
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+> **Nota:** Si ejecutas el frontend sin Docker, crea un archivo `.env` en la carpeta `Frontend/` con `VITE_API_BASE_URL=http://localhost:8080/api/v1`
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+cd Frontend
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Disponible en: `http://localhost:5173`
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### Build para Producción
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm run build
+npm run preview
 ```
+
+## Estructura
+
+```text
+src/
+├── features/
+│   ├── carreras/          # Módulo de carreras
+│   │   ├── components/
+│   │   ├── hooks/
+│   │   ├── store/
+│   │   └── CarrerasPage.tsx
+│   └── facultades/        # Módulo de facultades
+│       ├── components/
+│       ├── hooks/
+│       ├── store/
+│       └── FacultadesPage.tsx
+├── shared/
+│   ├── components/        # Componentes reutilizables
+│   ├── config/            # Configuración API
+│   └── types/             # Tipos TypeScript
+├── App.tsx
+└── main.tsx
+```
+
+## Características
+
+- Gestión de facultades y carreras (CRUD completo)
+- Diseño responsive con Tailwind CSS
+- Gestión de estado con Zustand
+- Validaciones de formularios
+
+## Scripts
+
+```bash
+npm run dev          # Desarrollo
+npm run build        # Producción
+npm run lint         # Linter
+```
+
+## Configuración API
+
+Variable de entorno en `.env`:
+
+```env
+VITE_API_BASE_URL=http://localhost:8080/api/v1
+```
+
+## Docker
+
+```bash
+docker build -t matriculas-frontend .
+docker run -p 5173:80 matriculas-frontend
+```
+
+## Troubleshooting
+
+**Puerto en uso:** Cambia `server.port` en `vite.config.ts`
+
+**Error de módulos:** Ejecuta `rm -rf node_modules && npm install`
+
+---
+
+[← Volver al README principal](../README.md)
